@@ -1,0 +1,32 @@
+  .kanban-board {
+    display: flex;
+    gap: 20px; 
+    overflow-x: auto; 
+  }
+  
+  .section {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 5px;
+    width: 300px; 
+    flex-shrink: 0; 
+  }
+  
+  .tasks {
+    margin-top: 10px;
+  }
+  
+  .task-card {
+    background: white;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
