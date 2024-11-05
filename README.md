@@ -44,7 +44,6 @@
 - **Redux**: State management library for managing application state.
 - **React Router**: For routing and navigation.
 - **Axios**: For making HTTP requests.
-- **Moment.js**: For date and time manipulation.
 - **react-beautiful-dnd**:  drag-and-drop interface for React.
 - **react-dnd-html5-backend**:  enabling drag-and-drop functionality.
 - **validator.js**: For input validation.
