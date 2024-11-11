@@ -8,8 +8,6 @@ import PrivateRoute from './components/PrivateRoute';
 import { useAuth } from './context/AuthContext';
 import { useEffect } from 'react';
 import axios from 'axios';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import './App.css';
 
 function App() {
@@ -41,46 +39,51 @@ function App() {
   };
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="app-container">
-        <header>
+    <div className="app-container">
+      <header>
+        {/* Apple logo inside a black box at the top */}
+        <div className="logo-container">
+          <div className="apple-logo-box">
+            <img src="https://i.pinimg.com/474x/b0/d2/6e/b0d26e8122dffa8a51081f7f814581d7.jpg" alt="Apple Logo" />
+          </div>
           <h1>Kanban Board App</h1>
-          <nav>
-            <Link to="/">Home</Link> |
-            {!user.isLoggedIn ? (
-              <>
-                <Link to="/register">Register</Link> |
-                <Link to="/login">Login</Link>
-              </>
-            ) : (
-              <>
-                <Link to="/account">Account</Link> |
-                <Link to="/kanban">Kanban Board</Link> |
-                <Link to="/" onClick={handleLogout}>Logout</Link>
-              </>
-            )}
-          </nav>
-        </header>
+        </div>
 
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/account" element={
-              <PrivateRoute>
-                <Account />
-              </PrivateRoute>
-            } />
-            <Route path="/kanban" element={
-              <PrivateRoute>
-                <KanbanBoard />
-              </PrivateRoute>
-            } />
-          </Routes>
-        </main>
-      </div>
-    </DndProvider>
+        <nav>
+          <Link to="/">Home</Link> |
+          {!user.isLoggedIn ? (
+            <>
+              <Link to="/register">Register</Link> |
+              <Link to="/login">Login</Link>
+            </>
+          ) : (
+            <>
+              <Link to="/account">Account</Link> |
+              <Link to="/kanban">Kanban Board</Link> |
+              <Link to="/" onClick={handleLogout}>Logout</Link>
+            </>
+          )}
+        </nav>
+      </header>
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/account" element={
+            <PrivateRoute>
+              <Account />
+            </PrivateRoute>
+          } />
+          <Route path="/kanban" element={
+            <PrivateRoute>
+              <KanbanBoard />
+            </PrivateRoute>
+          } />
+        </Routes>
+      </main>
+    </div>
   );
 }
 

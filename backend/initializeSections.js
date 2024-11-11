@@ -9,6 +9,8 @@ const initializeDefaultSections = async () => {
       const section = new Section({ title });
       await section.save();
       console.log(`Created default section: ${title}`);
+    } else {
+      console.log(`Section "${title}" already exists. Skipping creation.`);
     }
   }
 };

@@ -20,7 +20,9 @@ const initializeDefaultSections = require('./initializeSections');
 app.use(express.json());
 app.use(cors())
 configureDB();
-initializeDefaultSections();
+(async () => {
+    await initializeDefaultSections();
+})()
 
 app.post('/users/register', checkSchema(userRegisterValidation), userCltr.register);
 app.post('/users/login', checkSchema(userLoginValidation), userCltr.login);

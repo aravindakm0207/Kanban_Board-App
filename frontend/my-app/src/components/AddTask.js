@@ -1,62 +1,58 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { addTask } from '../redux/actions/taskActions';
+import { createTask } from '../redux/actions/taskActions';
 
-const AddTaskForm = ({ sectionId }) => {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [dueDate, setDueDate] = useState('');
-  const [assignee, setAssignee] = useState('');
-  const [error, setError] = useState('');
-  const dispatch = useDispatch();
+const AddTask = ({ sectionId }) => {
+    const [taskData, setTaskData] = useState({
+        name: '',
+        description: '',
+        dueDate: '',
+        assignee: ''
+    });
+    const dispatch = useDispatch();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const taskData = { name, description, dueDate, assignee, section: sectionId };
-    try {
-      await dispatch(addTask(taskData)); 
-      setName('');
-      setDescription('');
-      setDueDate('');
-      setAssignee('');
-      setError('');
-    } catch (err) {
-      setError('Failed to add task. Please try again.');
-    }
-  };
+    const handleChange = (e) => {
+        setTaskData({ ...taskData, [e.target.name]: e.target.value });
+    };
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input 
-        type="text" 
-        placeholder="Task Name" 
-        value={name} 
-        onChange={(e) => setName(e.target.value)} 
-        required 
-      />
-      <textarea 
-        placeholder="Description" 
-        value={description} 
-        onChange={(e) => setDescription(e.target.value)} 
-        required 
-      />
-      <input 
-        type="date" 
-        value={dueDate} 
-        onChange={(e) => setDueDate(e.target.value)} 
-        required 
-      />
-      <input 
-        type="text" 
-        placeholder="Assignee" 
-        value={assignee} 
-        onChange={(e) => setAssignee(e.target.value)} 
-        required 
-      />
-      <button type="submit">Add Task</button>
-      {error && <p style={{ color: 'red' }}>{error}</p>} 
-    </form>
-  );
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(createTask({ ...taskData, section: sectionId }));
+        setTaskData({ name: '', description: '', dueDate: '', assignee: '' });
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="add-task">
+            <input
+                type="text"
+                name="name"
+                value={taskData.name}
+                onChange={handleChange}
+                placeholder="Task Name"
+            />
+            <input
+                type="text"
+                name="description"
+                value={taskData.description}
+                onChange={handleChange}
+                placeholder="Task Description"
+            />
+            <input
+                type="date"
+                name="dueDate"
+                value={taskData.dueDate}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                name="assignee"
+                value={taskData.assignee}
+                onChange={handleChange}
+                placeholder="Assignee"
+            />
+            <button type="submit">Add Task</button>
+        </form>
+    );
 };
 
-export default AddTaskForm;
+export default AddTask;

@@ -5,7 +5,8 @@ import configureStore from './redux/store/configureStore';
 import { Provider } from 'react-redux';
 import { AuthProvider } from './context/AuthContext';
 import { BrowserRouter } from 'react-router-dom'; 
-
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 const store = configureStore();
 const rootElement = document.getElementById('root');
@@ -16,7 +17,9 @@ if (rootElement) {
     <Provider store={store}>
       <AuthProvider>
         <BrowserRouter> 
-          <App />
+          <DndProvider backend={HTML5Backend}>
+            <App />
+          </DndProvider>
         </BrowserRouter>
       </AuthProvider>
     </Provider>
