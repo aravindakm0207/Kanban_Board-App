@@ -21,7 +21,7 @@ app.use(express.json());
 //app.use(cors())
 
 app.use(cors({
-    origin: 'https://kanban-board-app-tan.vercel.app', 
+    origin: 'https://kanban-board-app-amber-ten.vercel.app', 
     credentials: true
 }));
 
@@ -29,6 +29,12 @@ configureDB();
 (async () => {
     await initializeDefaultSections();
 })()
+
+
+app.get("/", (req, res) => {
+    res.send("Welcome to the Kanban Board API");
+  });
+  
 
 app.post('/users/register', checkSchema(userRegisterValidation), userCltr.register);
 app.post('/users/login', checkSchema(userLoginValidation), userCltr.login);
