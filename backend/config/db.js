@@ -10,3 +10,4 @@ const configureDB = async () => {
 };
 
 module.exports = configureDB;
+
