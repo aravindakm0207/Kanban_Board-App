@@ -18,12 +18,13 @@ const taskCtrl = require('./app/controllers/task-ctrl');
 const initializeDefaultSections = require('./initializeSections');
 
 app.use(express.json());
-app.use(cors())
-{/*
+//app.use(cors())
+
 app.use(cors({
-    origin: 'https://expense-app-frontend-jegs.vercel.app', 
+    origin: 'https://kanban-board-app-tan.vercel.app', 
     credentials: true
-}));*/}
+}));
+
 configureDB();
 (async () => {
     await initializeDefaultSections();
