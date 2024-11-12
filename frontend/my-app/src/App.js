@@ -41,7 +41,7 @@ function App() {
   return (
     <div className="app-container">
       <header>
-        {/* Apple logo inside a black box at the top */}
+        
         <div className="logo-container">
           <div className="apple-logo-box">
             <img src="https://i.pinimg.com/474x/b0/d2/6e/b0d26e8122dffa8a51081f7f814581d7.jpg" alt="Apple Logo" />
