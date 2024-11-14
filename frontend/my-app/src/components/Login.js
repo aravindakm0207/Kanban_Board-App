@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import validator from 'validator'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import API_BASE_URL from '../config'
 import _ from 'lodash'
 import { useAuth } from '../context/AuthContext'
 export default function Login() {
