@@ -40,9 +40,9 @@ export default function Login() {
 
         if(Object.keys(errors).length === 0 ) {
             try { 
-                const response = await axios.post('http://localhost:5000/users/login', formData) 
+                const response = await axios.post(`${API_BASE_URL}/users/login`, formData) 
                 localStorage.setItem('token', response.data.token)
-                const userResponse = await axios.get('http://localhost:5000/users/account', { 
+                const userResponse = await axios.get(`${API_BASE_URL}/users/account`, { 
                     headers : {
                         Authorization: localStorage.getItem('token')
                     }
