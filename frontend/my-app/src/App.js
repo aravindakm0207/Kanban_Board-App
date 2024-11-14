@@ -9,6 +9,7 @@ import { useAuth } from './context/AuthContext';
 import { useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
+import API_BASE_URL from './config'
 
 function App() {
   const { user, dispatch } = useAuth();
@@ -18,7 +19,7 @@ function App() {
       const token = localStorage.getItem("token");
       if (token) {
         try {
-          const response = await axios.get('http://localhost:5000/users/account', {
+          const response = await axios.get(`${API_BASE_URL}/users/account`, {
             headers: {
               Authorization: `Bearer ${token}`,
             },
