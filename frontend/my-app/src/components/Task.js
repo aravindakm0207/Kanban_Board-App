@@ -9,7 +9,7 @@ const Task = ({ task, section }) => {
         name: task.name,
         description: task.description,
         dueDate: task.dueDate.split("T")[0], // Keep only the date part
-        assignee: task.assignee
+        assignee: task.assignee ? task.assignee._id : '' // Handle the assignee as an ID
     });
 
     const dispatch = useDispatch();
@@ -32,6 +32,21 @@ const Task = ({ task, section }) => {
         e.dataTransfer.setData('currentSectionId', section);
     };
 
+    // Helper function to format the due date label
+    const getDueDateLabel = (dueDate) => {
+        const currentDate = new Date();
+        const taskDueDate = new Date(dueDate);
+        const timeDifference = taskDueDate - currentDate;
+
+        const dayInMs = 24 * 60 * 60 * 1000; // Milliseconds in one day
+        const differenceInDays = Math.round(timeDifference / dayInMs);
+
+        if (differenceInDays === 0) return 'Today';
+        if (differenceInDays === 1) return 'Tomorrow';
+        if (differenceInDays === -1) return 'Yesterday';
+        return taskDueDate.toLocaleDateString();
+    };
+
     const getDueDateColor = (dueDate) => {
         const currentDate = new Date();
         const taskDueDate = new Date(dueDate);
@@ -39,54 +54,74 @@ const Task = ({ task, section }) => {
     };
 
     return (
-        <div className="task" draggable onDragStart={handleDragStart}>
-            {isEditing ? (
-                <div>
-                    <input
-                        type="text"
-                        name="name"
-                        value={updatedTaskData.name}
-                        onChange={handleChange}
-                    />
-                    <textarea
-                        name="description"
-                        value={updatedTaskData.description}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="date"
-                        name="dueDate"
-                        value={updatedTaskData.dueDate}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type="text"
-                        name="assignee"
-                        value={updatedTaskData.assignee}
-                        onChange={handleChange}
-                    />
-                </div>
-            ) : (
-                <div>
-                    <div className="task-header">
-                        <h3>{task.name}</h3>
-                        <ThreeDotsMenu 
-                            onEdit={() => setIsEditing(!isEditing)} 
-                            onDelete={handleDeleteTask} 
-                        />
-                    </div>
-                    <p>{task.description}</p>
-                    <p style={{ color: getDueDateColor(task.dueDate) }}>
-                        {task.dueDate.split("T")[0]} 
-                    </p>
-                    <p>{task.assignee}</p>
-                </div>
-            )}
-
-            {isEditing && <button onClick={handleUpdateTask}>Save Changes</button>}
+        <div className="task-card" draggable onDragStart={handleDragStart}>
+    {isEditing ? (
+        <div className="task-edit">
+            <input
+                type="text"
+                name="name"
+                value={updatedTaskData.name}
+                onChange={handleChange}
+                placeholder="Task Name"
+            />
+            <input
+                name="description"
+                value={updatedTaskData.description}
+                onChange={handleChange}
+                placeholder="Task Description"
+            />
+            <input
+                type="date"
+                name="dueDate"
+                value={updatedTaskData.dueDate}
+                onChange={handleChange}
+            />
+            <input
+                type="text"
+                name="assignee"
+                value={updatedTaskData.assignee}
+                onChange={handleChange}
+                placeholder="Assignee"
+            />
+            <button onClick={handleUpdateTask}>Save</button>
         </div>
+    ) : (
+        <div className="task-view">
+            {/* Task Header: Description and Three Dots */}
+            <div className="task-header">
+                <p className="task-description">{task.description}</p>
+                <ThreeDotsMenu 
+                    onEdit={() => setIsEditing(!isEditing)} 
+                    onDelete={handleDeleteTask} 
+                />
+            </div>
+            {/* Task Footer: Assignee, Due Date, Task Name */}
+            <div className="task-footer">
+                <img
+                    src={
+                        task.assignee?.profilePic
+                            ? `http://localhost:5000${task.assignee.profilePic}`
+                            : '/placeholder.jpg'
+                    }
+                    alt="Profile"
+                    style={{
+                        width: '40px',
+                        height: '40px',
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                    }}
+                    className="assignee-pic"
+                />
+                <p style={{ color: getDueDateColor(task.dueDate) }}>
+                    {getDueDateLabel(task.dueDate)}
+                </p>
+                <h3 className="task-name">{task.name}</h3>
+            </div>
+        </div>
+    )}
+</div>
+
     );
 };
 
 export default Task;
-

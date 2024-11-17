@@ -1,5 +1,4 @@
-
-
+/* General App Styling */
 .app-container {
   font-family: Arial, sans-serif;
   display: flex;
@@ -34,7 +33,6 @@ header {
 header h1 {
   font-size: 30px;
   font-weight: 600;
-  
 }
 
 /* Navigation Links Styling */
@@ -90,9 +88,9 @@ main {
 
 /* Section Header Layout */
 .section-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: flex; /* Align items horizontally */
+  align-items: center; /* Vertically align text and menu */
+  justify-content: space-between; /* Space between name and menu */
   font-size: 14px;
   font-weight: 600;
   color: #333;
@@ -101,34 +99,16 @@ main {
 
 .section-header h2 {
   margin: 0;
-  flex-grow: 1;
-}
-
-.section-header .buttons {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.section-header .add-button {
-  background-color: transparent;
-  border: 1px solid #ddd;
-  border-radius: 50%;
-  padding: 2px 8px;
-  font-size: 18px;
-  color: #007bff;
-  cursor: pointer;
-  transition: color 0.3s ease, border-color 0.3s ease;
-}
-
-.section-header .add-button:hover {
-  color: #0056b3;
-  border-color: #0056b3;
+  flex-grow: 1; /* Take up remaining space */
+  overflow: hidden; /* Prevent overflow of text */
+  white-space: nowrap; /* Prevent wrapping */
+  text-overflow: ellipsis; /* Truncate with ellipsis */
 }
 
 .section-header .three-dots-menu {
   font-size: 18px;
   cursor: pointer;
+  margin-left: 10px;
 }
 
 /* Task Container */
@@ -166,10 +146,12 @@ main {
   width: 100%;
 }
 
-.task-name {
-  font-weight: bold;
-  font-size: 16px;
-  flex-grow: 1;
+.task-description {
+  flex-grow: 1; /* Task description takes available space */
+  font-size: 14px;
+  font-weight: 500;
+  color: #555;
+  margin: 0;
 }
 
 .three-dots-menu {
@@ -178,62 +160,38 @@ main {
   margin-left: 10px;
 }
 
-/* Task Details (Description, Due Date, Assignee) */
-.task-details {
+/* Task Footer: Details and Styling */
+.task-footer {
   display: flex;
   align-items: center;
-  gap: 15px;
-  font-size: 14px;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.assignee-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .task-due-date {
   font-size: 14px;
-  color: #007bff;
-  margin: 0;
+  font-weight: 500;
 }
 
 .task-due-date.overdue {
   color: red;
 }
 
-.task-due-date.completed {
-  color: green;
+.task-due-date.upcoming {
+  color: #007bff;
 }
 
-.task-assignee {
-  font-size: 14px;
-  font-weight: 600;
+.task-name {
+  font-weight: bold;
+  font-size: 16px;
   margin: 0;
-}
-
-/* Menu Options (Dropdown) */
-.menu-options {
-  position: absolute;
-  right: 10px;
-  top: 35px;
-  background: #ffffff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  padding: 0.5rem;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  min-width: 120px;
-}
-
-.menu-options button {
-  display: block;
-  padding: 0.5rem;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 14px;
-  color: #555;
-}
-
-.menu-options button:hover {
-  background-color: #f4f4f4;
 }
 
 /* Add Task Form */
@@ -317,11 +275,6 @@ main {
   border-radius: 4px;
 }
 
-.modal-content textarea {
-  resize: vertical;
-  min-height: 80px;
-}
-
 .modal-content button {
   background-color: #007bff;
   color: #fff;
@@ -335,53 +288,6 @@ main {
   background-color: #f44336;
 }
 
-/* Add Section Container and Form */
-.add-section-container button {
-  display: inline-block;  /* allows to set a width and height on the element.*/
-  padding: 0.2rem 0.5rem;
-  width: auto;
-  white-space: nowrap;
-  min-width: unset;
-  height: auto;
-}
-
-.add-section {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.add-section input {
-  padding: 0.5rem;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-}
-
-.add-section button {
-  padding: 0.5rem;
-  font-size: 14px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 100%;
-  transition: background-color 0.3s ease;
-}
-
-.add-section button[type="submit"] {
-  background-color: #007bff;
-  color: #fff;
-}
-
-.add-section button[type="button"] {
-  background-color: #f44336;
-  color: #fff;
-}
-
-.add-section button[type="submit"]:hover {
-  background-color: #0056b3;
-}
-
-.add-section button[type="button"]:hover {
+.modal-content button.cancel:hover {
   background-color: #d32f2f;
 }

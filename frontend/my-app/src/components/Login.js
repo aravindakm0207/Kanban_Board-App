@@ -50,7 +50,7 @@ export default function Login() {
                 })
                 console.log(userResponse.data)
                 dispatch({ type: "LOGIN", payload: { account: userResponse.data } })
-                navigate('/')
+                navigate('/');
             } catch(err) {
                 setForm({...form, serverErrors: err.response.data.errors, clientErrors: {} })
             }

@@ -3,7 +3,7 @@ import validator from "validator";
 import axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import _ from 'lodash';
-import API_BASE_URL from '../config'
+import API_BASE_URL from '../config';
 
 export default function Register() {
   const navigate = useNavigate();
@@ -12,6 +12,7 @@ export default function Register() {
     lastname: '',
     email: '',
     password: '',
+    profilePic: null,  // Added to store the profile picture file
     serverErrors: [],
     clientErrors: {}
   });
@@ -42,18 +43,36 @@ export default function Register() {
     setForm({ ...form, [name]: value });
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setForm({ ...form, profilePic: file });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = _.pick(form, ['firstname', 'lastname', 'email', 'password']);
+    const formData = new FormData();
     
+    formData.append('firstname', form.firstname);
+    formData.append('lastname', form.lastname);
+    formData.append('email', form.email);
+    formData.append('password', form.password);
+    
+    if (form.profilePic) {
+      formData.append('profilePic', form.profilePic);
+    }
+
     runValidations();
 
     if (Object.keys(errors).length === 0) {
       try {
-        const response = await axios.post(`${API_BASE_URL}/users/register`, formData); // Updated URL
+        const response = await axios.post(`${API_BASE_URL}/users/register`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
         console.log(response.data);
         navigate('/login');
-      }catch (err) {
+      } catch (err) {
         console.log(err);
         setForm({ ...form, serverErrors: err.response?.data?.errors || [err.message] });
       }
@@ -119,6 +138,15 @@ export default function Register() {
           id="password"
         />
         {form.clientErrors.password && <span>{form.clientErrors.password}</span>}
+        <br />
+
+        <label htmlFor="profilePic">Upload Profile Picture</label><br />
+        <input
+          type="file"
+          onChange={handleFileChange}
+          name="profilePic"
+          id="profilePic"
+        />
         <br />
 
         <input type="submit" />

@@ -7,7 +7,7 @@ const AddTask = ({ sectionId }) => {
         name: '',
         description: '',
         dueDate: '',
-        assignee: ''
+        assignee: ''  // Expecting the assignee's email or name
     });
     const dispatch = useDispatch();
 
@@ -17,8 +17,13 @@ const AddTask = ({ sectionId }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(createTask({ ...taskData, section: sectionId }));
-        setTaskData({ name: '', description: '', dueDate: '', assignee: '' });
+        // Ensure the assignee email or name is passed
+        if (taskData.name.trim() && taskData.assignee.trim()) {
+            dispatch(createTask({ ...taskData, section: sectionId }));
+            setTaskData({ name: '', description: '', dueDate: '', assignee: '' });
+        } else {
+            alert('Please fill in all fields!');
+        }
     };
 
     return (
@@ -48,7 +53,7 @@ const AddTask = ({ sectionId }) => {
                 name="assignee"
                 value={taskData.assignee}
                 onChange={handleChange}
-                placeholder="Assignee"
+                placeholder="Assignee Email or Name"
             />
             <button type="submit">Add Task</button>
         </form>
