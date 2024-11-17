@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createTask } from '../redux/actions/taskActions';
 
-const AddTask = ({ sectionId }) => {
+const AddTask = ({ sectionId , closeDialog}) => {
     const [taskData, setTaskData] = useState({
         name: '',
         description: '',
@@ -21,6 +21,7 @@ const AddTask = ({ sectionId }) => {
         if (taskData.name.trim() && taskData.assignee.trim()) {
             dispatch(createTask({ ...taskData, section: sectionId }));
             setTaskData({ name: '', description: '', dueDate: '', assignee: '' });
+            closeDialog()
         } else {
             alert('Please fill in all fields!');
         }
