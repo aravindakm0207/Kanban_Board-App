@@ -8,6 +8,7 @@ const path = require('path');
 const userCltr = {};
 
 
+
 userCltr.register = async (req, res) => {
     console.log('Register API called');
     const errors = validationResult(req);
@@ -20,33 +21,39 @@ userCltr.register = async (req, res) => {
         const body = req.body;
         console.log('Received request body:', body);
 
-        console.log('Uploaded file:', req.file); // Debugging log for file upload
         let profilePicPath = null;
         if (req.file) {
-            profilePicPath = `/uploads/${req.file.filename}`;
-            console.log('Profile picture uploaded:', profilePicPath);
+            // Use the Cloudinary path (secure_url) directly from req.file
+            profilePicPath= req.file.path;
+            console.log('Profile picture uploaded to Cloudinary:', profilePicPath);
         } else {
-            console.log('No file uploaded');
+            console.log('No profile picture uploaded');
         }
 
+        // Hash the password
         const salt = await bcryptjs.genSalt();
         const hashPassword = await bcryptjs.hash(body.password, salt);
         console.log('Password hashed successfully');
 
+        // Create the user
         const user = new User({
             ...body,
             password: hashPassword,
-            profilePic: profilePicPath
+            profilePic: profilePicPath, // Save the correct Cloudinary URL
         });
 
         await user.save();
         console.log('User saved successfully:', user);
+
+        // Send response with selected user details
         res.status(201).json(_.pick(user, ['_id', 'firstname', 'lastname', 'email', 'profilePic']));
     } catch (err) {
         console.error('Error during user registration:', err);
-        res.status(500).json({ error: 'Something went wrong' });
+        res.status(500).json({ error: 'Something went wrong during registration' });
     }
 };
+
+
 
 
 
