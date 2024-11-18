@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import {
-  // deleteSection,
+   deleteSection,
   updateSection,
 } from "../../redux/actions/sectionActions";
 import { moveTask } from "../../redux/actions/taskActions";
@@ -21,7 +21,7 @@ const Section = ({ section, tasks = [] }) => {
   const [newTitle, setNewTitle] = useState(section.title);
   const [isAddTaskFormVisible, setIsAddTaskFormVisible] = useState(false);
 
-  // const handleDeleteSection = () => dispatch(deleteSection(section._id));
+   const handleDeleteSection = () => dispatch(deleteSection(section._id));
 
   const handleUpdateSection = () => {
     if (newTitle.trim()) {
@@ -116,8 +116,15 @@ const Section = ({ section, tasks = [] }) => {
               "aria-labelledby": "basic-button",
             }}
           >
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
+             <MenuItem
+    onClick={() => {
+      setIsEditing(true); // Enable edit mode
+      handleClose(); // Close the dropdown menu
+    }}
+  >
+    Edit
+  </MenuItem>
+            <MenuItem onClick={handleDeleteSection}>Delete</MenuItem>
           </Menu>
 
           {/* <ThreeDotsMenu

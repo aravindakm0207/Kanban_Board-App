@@ -1,4 +1,6 @@
 import { useAuth } from "../context/AuthContext";
+import API_BASE_URL from '../config';
+
 
 export default function Account() {
     const { user } = useAuth();
@@ -14,7 +16,7 @@ export default function Account() {
                         <>
                            {/*  <p>Profile Picture URL: {user.account.profilePic}</p> */}
                             <img
-                                src={`http://localhost:5000${user.account.profilePic}`} // Add the base URL if needed
+                                src={`${API_BASE_URL}${user.account.profilePic}`}// Add the base URL if needed
                                 alt="Profile"
                                 style={{ width: "150px", height: "150px", borderRadius: "50%" }}
                             />

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import API_BASE_URL from '../config';
 
 import { Box } from "@mui/material";
 import Menu from "@mui/material/Menu";
@@ -119,7 +120,11 @@ const Task = ({ task, section }) => {
           }}>
             <Avatar
               alt={task.assignee.firstname}
-              src={`http://localhost:1335${task.assignee.profilePic}`}
+              src={`${API_BASE_URL}${task.assignee.profilePic}`}
+              sx={{
+                width: 20,   // Adjust the size as per your requirement
+                height: 20,  // Adjust the size as per your requirement
+              }}
             />
             <p style={{ color: getDueDateColor(task.dueDate) }}>
               {getDueDateLabel(task.dueDate)}

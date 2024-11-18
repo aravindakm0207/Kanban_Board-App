@@ -27,14 +27,19 @@ export const fetchTasks = () => async (dispatch) => {
 
 export const createTask = (taskData) => async (dispatch) => {
     try {
-        const headers = { Authorization: localStorage.getItem('token') };
+        const token = localStorage.getItem('token');
+        const headers = token ? { Authorization: token } : {};
+        console.log('Sending task data:', taskData); // Debugging
         const response = await axios.post(`${API_BASE_URL}/create-tasks`, taskData, { headers });
         console.log('Task created:', response.data);
         dispatch({ type: CREATE_TASK_SUCCESS, payload: response.data });
+        
     } catch (error) {
+        console.error('Error creating task:', error.response || error.message); // Debugging
         dispatch({ type: CREATE_TASK_FAILURE, payload: error.response?.data || error.message });
     }
 };
+
 
 export const updateTask = (taskId, data) => async (dispatch) => {
     try {

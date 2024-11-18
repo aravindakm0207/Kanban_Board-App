@@ -20,6 +20,7 @@ const AddTask = ({ sectionId , closeDialog}) => {
         // Ensure the assignee email or name is passed
         if (taskData.name.trim() && taskData.assignee.trim()) {
             dispatch(createTask({ ...taskData, section: sectionId }));
+            console.log(taskData);
             setTaskData({ name: '', description: '', dueDate: '', assignee: '' });
             closeDialog()
         } else {
