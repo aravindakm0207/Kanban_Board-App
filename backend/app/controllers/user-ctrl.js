@@ -8,7 +8,7 @@ const path = require('path');
 const userCltr = {};
 
 
-
+/* multer cloudinary
 userCltr.register = async (req, res) => {
     console.log('Register API called');
     const errors = validationResult(req);
@@ -53,7 +53,47 @@ userCltr.register = async (req, res) => {
     }
 };
 
+*/
 
+userCltr.register = async (req, res) => {
+    console.log('Register API called');
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        console.error('Validation errors:', errors.array());
+        return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+        const body = req.body;
+        console.log('Received request body:', body);
+
+        console.log('Uploaded file:', req.file); // Debugging log for file upload
+        let profilePicPath = null;
+        if (req.file) {
+            profilePicPath = `/uploads/${req.file.filename}`;
+            console.log('Profile picture uploaded:', profilePicPath);
+        } else {
+            console.log('No file uploaded');
+        }
+
+        const salt = await bcryptjs.genSalt();
+        const hashPassword = await bcryptjs.hash(body.password, salt);
+        console.log('Password hashed successfully');
+
+        const user = new User({
+            ...body,
+            password: hashPassword,
+            profilePic: profilePicPath
+        });
+
+        await user.save();
+        console.log('User saved successfully:', user);
+        res.status(201).json(_.pick(user, ['_id', 'firstname', 'lastname', 'email', 'profilePic']));
+    } catch (err) {
+        console.error('Error during user registration:', err);
+        res.status(500).json({ error: 'Something went wrong' });
+    }
+}; 
 
 
 
