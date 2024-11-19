@@ -25,6 +25,9 @@ app.use(express.json());
 app.use(cors({
     origin: 'https://kanban-board-app-amber-ten.vercel.app', 
     credentials: true
+
+
+    
 }));
 
 configureDB();

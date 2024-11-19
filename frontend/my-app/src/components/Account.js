@@ -15,11 +15,13 @@ export default function Account() {
                     {user.account?.profilePic ? (
                         <>
                            {/*  <p>Profile Picture URL: {user.account.profilePic}</p> */}
-                            <img
-                                src={`${API_BASE_URL}${user.account.profilePic}`}// Add the base URL if needed
-                                alt="Profile"
-                                style={{ width: "150px", height: "150px", borderRadius: "50%" }}
-                            />
+                           <img
+    src={user.account?.profilePic.startsWith('http') 
+        ? user.account.profilePic // Cloudinary URL
+        : `${API_BASE_URL}${user.account.profilePic}`} // Local file path
+    alt="Profile"
+    style={{ width: "150px", height: "150px", borderRadius: "50%" }}
+/>
                         </>
                     ) : (
                         <p>No Profile Picture Uploaded</p>

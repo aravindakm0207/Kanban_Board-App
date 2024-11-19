@@ -8,7 +8,7 @@ const path = require('path');
 const userCltr = {};
 
 
-/* multer cloudinary
+
 userCltr.register = async (req, res) => {
     console.log('Register API called');
     const errors = validationResult(req);
@@ -53,8 +53,8 @@ userCltr.register = async (req, res) => {
     }
 };
 
-*/
 
+/*
 userCltr.register = async (req, res) => {
     console.log('Register API called');
     const errors = validationResult(req);
@@ -95,7 +95,7 @@ userCltr.register = async (req, res) => {
     }
 }; 
 
-
+*/
 
 userCltr.login = async (req, res) => {
     const errors = validationResult(req);
