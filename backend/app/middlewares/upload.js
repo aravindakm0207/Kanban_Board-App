@@ -43,7 +43,7 @@ const storage = multer.diskStorage({
         cb(null, path.join(__dirname, '../../uploads')); // Adjusted to point to root uploads folder
     },
     filename: function (req, file, cb) {
-        cb(null, ${Date.now()}-${file.originalname});
+      cb(null, `${Date.now()}-${file.originalname}`)
     }
 });
 
