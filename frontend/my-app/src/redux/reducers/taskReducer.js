@@ -1,6 +1,18 @@
+import {
+  FETCH_TASKS_SUCCESS,
+  FETCH_TASKS_FAILURE,
+  CREATE_TASK_SUCCESS,
+  CREATE_TASK_FAILURE,
+  UPDATE_TASK_SUCCESS,
+  UPDATE_TASK_FAILURE,
+  DELETE_TASK_SUCCESS,
+  DELETE_TASK_FAILURE,
+  MOVE_TASK_SUCCESS,
+  MOVE_TASK_FAILURE,
+} from '../actions/taskActions';
+
 const initialState = {
   tasks: [],
-  sections: [], // Ensure sections exist in initial state
   error: null,
 };
 
@@ -10,26 +22,12 @@ export const taskReducer = (state = initialState, action) => {
 
   switch (action.type) {
     case FETCH_TASKS_SUCCESS:
-      return { 
-        ...state, 
-        tasks: action.payload.tasks, 
-        sections: action.payload.sections || [] 
-      };
+      return { ...state, tasks: action.payload };
 
     case CREATE_TASK_SUCCESS:
-      console.log('Task added to section:', action.payload.section);
 
-      const updatedSections = (state.sections || []).map((section) =>
-        section._id === action.payload.section
-          ? { 
-              ...section, 
-              tasks: [...(section.tasks || []), action.payload] 
-            }
-          : section
-      );
 
-      console.log('Updated Sections:', updatedSections);
-      return { ...state, sections: updatedSections };
+      return { ...state, tasks: [...state.tasks, action.payload] };
 
     case UPDATE_TASK_SUCCESS:
       return {
