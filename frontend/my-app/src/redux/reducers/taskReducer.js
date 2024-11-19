@@ -11,6 +11,7 @@ import {
   MOVE_TASK_FAILURE,
 } from '../actions/taskActions';
 
+
 const initialState = {
   tasks: [],
   error: null,
